@@ -78,6 +78,54 @@ namespace SkalProj_Datastrukturer_Minne
             //string value = input.substring(1);
 
             //switch(nav){...}
+            Console.Clear();
+            string? userInput;
+            char userChoice = ' ';
+            List<string> theList = new List<string>();
+            do
+            {
+                Console.WriteLine("Use the menu below to add or remove input to the list.");
+                Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                Console.WriteLine("* Add input to the list: write '+' and the your input");
+                Console.WriteLine("* Remove from the list: write '-' and then the input you would like to remove");
+                Console.WriteLine("* Exit the application and go back to the main menu: 0");
+
+                userInput = Console.ReadLine();
+                userChoice = userInput[0];
+                userInput = userInput.Remove(0, 1);
+                userInput = userInput.Trim();
+                switch (userChoice)
+                {
+                    case '+':
+                        theList.Add(userInput);
+                        Console.WriteLine(theList.Count());
+                        Console.WriteLine(theList.Capacity);
+                        break;
+                    case '-':
+                        int getIndex = theList.IndexOf(userInput);
+                        if (getIndex >= 0)
+                        {
+                            theList.RemoveAt(getIndex);
+                            Console.WriteLine(theList.Count());
+                            Console.WriteLine(theList.Capacity);
+                        }
+                        else
+                            Console.WriteLine("Please write an item that exist in the list");
+                        break;
+                    case '0':
+                        break;
+                    default:
+                        Console.WriteLine("Please add a '+' or a '-' before the input depending on what you want to do!");
+                        break;
+                }
+            } while (userChoice != '0');
+            //2.Capacity ökar när count är påväg att bli större än vad capacity är alltså när listan blir större än det allocerad minnet.
+            //3.Det ökar med 4 varje gång om man inte explecit ber den öka med något annat.
+            //4.För att slippa gör en ny underliggande array varje gång vilket tar upp minne på heapen tills GB tar bort det.
+            //5.Nej, kapasiteten kommer inte minska om man inte explicit säger åt den att göra det.
+            //6.När du redan sen innan vet hur stor collection du ska ha. Då slipper du allocera mer minne än du ska använda.
+            //och om du aldrig kommer ändra på storleken av kollektionen.
+
         }
 
         /// <summary>
@@ -90,6 +138,38 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+            Console.Clear();
+            int userChoice;
+            Queue<string> theQueue = new Queue<string>();  
+            do
+            {
+                Console.WriteLine("Use the menu below to add or remove people to and from the queue.");
+                Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                Console.WriteLine("*1: Add person to the queue");
+                Console.WriteLine("*2: Remove the first person from the queue");
+                Console.WriteLine("*0: Exit the application and go back to the main menu\n");
+                userChoice = int.Parse(Console.ReadLine());
+                switch (userChoice)
+                {
+                    case 1:
+                        Console.WriteLine("Who do you want to add to the queue?");
+                        string personToAdd = (Console.ReadLine());
+                        theQueue.Enqueue(personToAdd);
+                        Console.WriteLine($"{personToAdd} was added to the queue!");
+                        Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
+                        break;
+                    case 2:
+                        Console.WriteLine($"{theQueue.Dequeue()} was removed from the queue");
+                        Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        Console.WriteLine("Please enter a valid choice from the menu!");
+                        break;
+                }
+
+            } while (userChoice !=0);
         }
 
         /// <summary>
