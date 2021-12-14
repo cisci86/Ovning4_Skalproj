@@ -144,9 +144,9 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 Console.WriteLine("Use the menu below to add or remove people to and from the queue.");
                 Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-                Console.WriteLine("*1: Add person to the queue");
-                Console.WriteLine("*2: Remove the first person from the queue");
-                Console.WriteLine("*0: Exit the application and go back to the main menu\n");
+                Console.WriteLine("* 1: Add person to the queue");
+                Console.WriteLine("* 2: Remove the first person from the queue");
+                Console.WriteLine("* 0: Exit the application and go back to the main menu\n");
                 userChoice = GetInputInt();
                 switch (userChoice)
                 {
@@ -158,8 +158,13 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
                         break;
                     case 2:
-                        Console.WriteLine($"{theQueue.Dequeue()} was removed from the queue");
-                        Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
+                        if (theQueue.Count > 0)
+                        {
+                            Console.WriteLine($"{theQueue.Dequeue()} was removed from the queue");
+                            Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
+                        }
+                        else
+                            Console.WriteLine("The queue is already empty! Please add someone to the queue first.");
                         break;
                     case 0:
                         break;
@@ -181,6 +186,7 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+            Console.Clear();
             Stack<String> theStack = new Stack<String>();
             int userChoice;
             do
@@ -202,8 +208,13 @@ namespace SkalProj_Datastrukturer_Minne
                         Console.WriteLine($"The queue is {theStack.Count} persons long\n");
                         break;
                     case 2:
-                        Console.WriteLine($"{theStack.Pop()} was removed from the queue");
-                        Console.WriteLine($"The queue is {theStack.Count} persons long\n");
+                        if (theStack.Count > 0)
+                        {
+                            Console.WriteLine($"{theStack.Pop()} was removed from the queue");
+                            Console.WriteLine($"The queue is {theStack.Count} persons long\n");
+                        }
+                        else
+                            Console.WriteLine("The queue is already empty, please add someone to the queue first!\n");
                         break;
                     case 3:
                         string stringToReverse;
@@ -282,9 +293,9 @@ namespace SkalProj_Datastrukturer_Minne
                 }
             }
             if (correct)
-                Console.WriteLine("Your parenthesis is correctly formated");
+                Console.WriteLine("Your parenthesis is correctly formated\n");
             else
-                Console.WriteLine("Your parenthesis is NOT correctly formated");
+                Console.WriteLine("Your parenthesis is NOT correctly formated\n");
         }
         private static int GetInputInt()
         {
