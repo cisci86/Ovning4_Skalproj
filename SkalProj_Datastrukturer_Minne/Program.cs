@@ -243,7 +243,49 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+            //Jag skulle använda en queue för att kolla att de kommer i rätt ordning.
 
+            Console.WriteLine("Enter string to check if it is correctly formated");
+            string input = Console.ReadLine();
+            bool correct = true;
+            Queue<Char> queue = new Queue<Char>();
+            foreach (char item in input)
+            {
+                if(item == '(' || item == ')' || item == '{' || item == '}')
+                    queue.Enqueue(item);
+            }
+            int stringLength = queue.Count;
+            if (stringLength < 2)
+                correct = false;
+            for (int i = 0; i < stringLength && correct; i += 2)
+            {
+                char dequeued = queue.Dequeue();
+                switch (dequeued)
+                {
+                    case '(':
+                        if (queue.Peek() != ')')
+                            correct = false;
+                        queue.Dequeue();
+                        break;
+                    case ')':
+                        correct = false;
+                        break;
+                    case '{':
+                        if (queue.Peek() != '}')
+                            correct = true;
+                        queue.Dequeue();
+                        break;
+                    case '}':
+                        correct = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (correct)
+                Console.WriteLine("Your parenthesis is correctly formated");
+            else
+                Console.WriteLine("Your parenthesis is NOT correctly formated");
         }
 
     }
