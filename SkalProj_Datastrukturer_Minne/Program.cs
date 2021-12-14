@@ -79,7 +79,7 @@ namespace SkalProj_Datastrukturer_Minne
 
             //switch(nav){...}
             Console.Clear();
-            string? userInput;
+            string userInput;
             char userChoice = ' ';
             List<string> theList = new List<string>();
             do
@@ -90,10 +90,9 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine("* Remove from the list: write '-' and then the input you would like to remove");
                 Console.WriteLine("* Exit the application and go back to the main menu: 0");
 
-                userInput = Console.ReadLine();
+                userInput = GetStringInput().Trim();
                 userChoice = userInput[0];
                 userInput = userInput.Remove(0, 1);
-                userInput = userInput.Trim();
                 switch (userChoice)
                 {
                     case '+':
@@ -148,12 +147,12 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine("*1: Add person to the queue");
                 Console.WriteLine("*2: Remove the first person from the queue");
                 Console.WriteLine("*0: Exit the application and go back to the main menu\n");
-                userChoice = int.Parse(Console.ReadLine());
+                userChoice = GetInputInt();
                 switch (userChoice)
                 {
                     case 1:
                         Console.WriteLine("Who do you want to add to the queue?");
-                        string personToAdd = (Console.ReadLine());
+                        string personToAdd = GetStringInput();
                         theQueue.Enqueue(personToAdd);
                         Console.WriteLine($"{personToAdd} was added to the queue!");
                         Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
@@ -191,13 +190,13 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine("* 1: Add person to the queue");
                 Console.WriteLine("* 2: Remove the last person from the queue");
                 Console.WriteLine("* 3: Revers a string");
-                Console.WriteLine("*0: Exit the application and go back to the main menu\n");
-                userChoice = int.Parse(Console.ReadLine());
+                Console.WriteLine("* 0: Exit the application and go back to the main menu\n");
+                userChoice = GetInputInt();
                 switch (userChoice)
                 {
                     case 1:
                         Console.WriteLine("Who do you want to add to the queue?");
-                        string personToAdd = (Console.ReadLine());
+                        string personToAdd = (GetStringInput());
                         theStack.Push(personToAdd);
                         Console.WriteLine($"{personToAdd} was added to the queue!");
                         Console.WriteLine($"The queue is {theStack.Count} persons long\n");
@@ -210,7 +209,7 @@ namespace SkalProj_Datastrukturer_Minne
                         string stringToReverse;
                         Stack<Char> reversString = new Stack<Char>();
                         Console.WriteLine("Which string do you what to reverse?");
-                        stringToReverse = (Console.ReadLine());
+                        stringToReverse = GetStringInput();
                         foreach (char letter in stringToReverse)
                         {
                             reversString.Push(letter);
@@ -246,7 +245,7 @@ namespace SkalProj_Datastrukturer_Minne
             //Jag skulle använda en queue för att kolla att de kommer i rätt ordning.
 
             Console.WriteLine("Enter string to check if it is correctly formated");
-            string input = Console.ReadLine();
+            string input = GetStringInput();
             bool correct = true;
             Queue<Char> queue = new Queue<Char>();
             foreach (char item in input)
@@ -287,7 +286,57 @@ namespace SkalProj_Datastrukturer_Minne
             else
                 Console.WriteLine("Your parenthesis is NOT correctly formated");
         }
+        private static int GetInputInt()
+        {
+            int intInput;
+            bool inputIsInt = false;
+            do
+            {
+                inputIsInt = ValidateInt(Console.ReadLine()!.Trim(), out intInput);
+            } while (!inputIsInt);
+            return intInput;
+        }
+        private static bool ValidateInt(string input, out int outPut)
+        {
+            bool inputIsInt = false;
+            inputIsInt = int.TryParse(input, out outPut);
+            if (!inputIsInt || string.IsNullOrWhiteSpace(input))
+            {
+                Console.Write("\nThat is not a number please try again: ");
 
+                return inputIsInt = false;
+            }
+            else if (outPut < 0)
+            {
+                Console.WriteLine("\nPlease enter an none negative number! Try again");
+                return inputIsInt = false;
+            }
+            else
+                return inputIsInt = true;
+        }
+        private static string GetStringInput()
+        {
+            bool isStringNotNullEmptyOrWhiteSpace = false;
+            string stringInput;
+            do
+            {
+                isStringNotNullEmptyOrWhiteSpace = ValidateString(Console.ReadLine()!, out stringInput);
+            } while (!isStringNotNullEmptyOrWhiteSpace);
+            return stringInput;
+        }
+        private static bool ValidateString(string input, out string outPut)
+        {
+            outPut = input;
+            if (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("\nPlease enter a word or a string");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
 
