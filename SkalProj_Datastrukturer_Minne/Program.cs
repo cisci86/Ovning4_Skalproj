@@ -182,6 +182,58 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+            Stack<String> theStack = new Stack<String>();
+            int userChoice;
+            do
+            {
+                Console.WriteLine("Use the menu below to add or remove people to and from the queue.");
+                Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+                Console.WriteLine("* 1: Add person to the queue");
+                Console.WriteLine("* 2: Remove the last person from the queue");
+                Console.WriteLine("* 3: Revers a string");
+                Console.WriteLine("*0: Exit the application and go back to the main menu\n");
+                userChoice = int.Parse(Console.ReadLine());
+                switch (userChoice)
+                {
+                    case 1:
+                        Console.WriteLine("Who do you want to add to the queue?");
+                        string personToAdd = (Console.ReadLine());
+                        theStack.Push(personToAdd);
+                        Console.WriteLine($"{personToAdd} was added to the queue!");
+                        Console.WriteLine($"The queue is {theStack.Count} persons long\n");
+                        break;
+                    case 2:
+                        Console.WriteLine($"{theStack.Pop()} was removed from the queue");
+                        Console.WriteLine($"The queue is {theStack.Count} persons long\n");
+                        break;
+                    case 3:
+                        string stringToReverse;
+                        Stack<Char> reversString = new Stack<Char>();
+                        Console.WriteLine("Which string do you what to reverse?");
+                        stringToReverse = (Console.ReadLine());
+                        foreach (char letter in stringToReverse)
+                        {
+                            reversString.Push(letter);
+                        }
+                        string reversedString = "";
+                        int stringLength = reversString.Count;
+                        for (int i = 0; i < stringLength; i++)
+                        {
+                            reversedString += reversString.Pop();
+                        }
+                        Console.WriteLine(reversedString);
+                        break;
+                    case 0:
+                        break;
+                    default:
+                        Console.WriteLine("Please enter a valid choice from the menu!");
+                        break;
+                }
+
+            } while (userChoice != 0);
+            //Denna metod fungerar inte så bra i kö exemplet för personerna som kom först kommer kunna få vänta väldigt länge på sin tur!
+            
+
         }
 
         static void CheckParanthesis()
