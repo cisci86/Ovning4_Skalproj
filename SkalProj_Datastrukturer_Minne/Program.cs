@@ -1,4 +1,30 @@
 ﻿using System;
+/*
+* F1: Stack och heap är två olika typer av minneshantering i datorn. På stacken läggs data nerifrån och upp och måste anändas
+* uppifrån och ner. T.ex. en trave med böcker, man måste börja stapla böckerna nerifrån och uppåt men man börjar plocka bort dem
+*uppifrån och ner. På heapen kan däremot datan lagras och hämtas oberoende av varandra så länge du vet var det finns. Det kan 
+*liknas med en burk med olika legobitar, så länge du vet vilken legobit du vill ha och var den finns i burken behöver du inte ta 
+*hänsyn till de andra legobitarna.
+*/
+/*
+ * F2: En refrence type och en value type är olika sätt att hålla data. En refrence typ håller en referens till en plats i minnet
+ * där datan lagras. När man jobbar med en refrence type så hanterar man bara referensen till platsen som datat lagras på. Om man
+ * därför pekar en refrence typ på en annan variable kommer det inte skapas en kopia av datan utan bara en ny referens till samma data
+ * Ändrar du den ena kommer även den andra ändras då variablen själv inte håller datat utan bara pekar på platsen datat lagras i minnet.
+ * en refrence type lagras på heapen, eller själva datan lagras på heapen men det finns en pointer till var på heapen den ligger lagrad
+ * i stacken.
+ * En value type däremot håller själva datan själv. Därför kan du göra en kopia på datan i en value type till en annan varabel. 
+ * Det olika varablerna kommer arbeta oberoende av varandra och om man ändrar den ena ändras inte den andra. En value type lagras generellt
+ * på stacken förutom om den ligger i ett som ett field i ett objekt, då kommer den lagars i hopp med resent av objektet på heapen.
+ */
+/*
+ * F3: Den första metoden returnerar 3 därför att x och y är value types av typen int. Vi kopierar in värdet från x till y och sen 
+ * ändrar värdet på y till 4. Detta påverkar inte den andra value typen x utan den fortsätter vara 3.
+ * I den andra metoden skapar vi två refrence type variabler med objekt av MyInt klassen. Vi sätter MyValue i objectet x till 3.
+ * Sen kopierar vi över refernecen från objektet x till objectet y som nu pekar på samma data som objektet x. När vi då ändrar MyValue 
+ * i objektet y ändrar vi samtidigt värdet för MyValue i objektet x då det är samma data och de olika objekten bara har en refernce till
+ * samma plats i minnet.
+ */
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -18,6 +44,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. Recursion"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -42,6 +69,10 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '4':
                         CheckParanthesis();
+                        break;
+                    case '5':
+                        Console.WriteLine("Type the nte number you like to now the even value of");
+                        Console.WriteLine(RecursiveEven(GetInputInt()));
                         break;
                     /*
                      * Extend the menu to include the recursive 
@@ -347,6 +378,14 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 return true;
             }
+        }
+        private static int RecursiveEven(int n)
+        {
+            if (n == 0)
+            {
+                return 0;
+            }
+            return (RecursiveEven(n - 1) + 2);
         }
     }
 }
