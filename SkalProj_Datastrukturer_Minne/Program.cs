@@ -44,7 +44,10 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
-                    + "\n5. Recursion"
+                    + "\n5. Recursion even numbers"
+                    + "\n6. Fibonacci sequence recursion"
+                    + "\n7. Iteration even numbers"
+                    + "\n8. Fibonacci sequence iteration"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -71,8 +74,24 @@ namespace SkalProj_Datastrukturer_Minne
                         CheckParanthesis();
                         break;
                     case '5':
+                        Console.Clear();
                         Console.WriteLine("Type the nte number you like to now the even value of");
                         Console.WriteLine(RecursiveEven(GetInputInt()));
+                        break;
+                    case '6':
+                        Console.Clear();
+                        Console.WriteLine("Type the index of the Fibonacci number you like the value for");
+                        Console.WriteLine(FibonacciSequenceRecursion(GetInputInt()));
+                        break;
+                    case '7':
+                        Console.Clear();
+                        Console.WriteLine("Type the nth number you want the even value for");
+                        Console.WriteLine(IterationEven(GetInputInt()));
+                        break;
+                    case '8':
+                        Console.Clear();
+                        Console.WriteLine("Type the index of the Fibonacci number you like the value for");
+                        Console.WriteLine(FibonacciSequenceIteration(GetInputInt()));
                         break;
                     /*
                      * Extend the menu to include the recursive 
@@ -121,9 +140,9 @@ namespace SkalProj_Datastrukturer_Minne
                 Console.WriteLine("* Remove from the list: write '-' and then the input you would like to remove");
                 Console.WriteLine("* Exit the application and go back to the main menu: 0");
 
-                userInput = GetStringInput().Trim();
-                userChoice = userInput[0];
-                userInput = userInput.Remove(0, 1);
+                userInput = GetStringInput().Trim(); //Removes trailing whitespace before and after input
+                userChoice = userInput[0]; // Grabs the + or - of the input
+                userInput = userInput.Remove(0, 1); // and removes it from the string
                 switch (userChoice)
                 {
                     case '+':
@@ -195,12 +214,12 @@ namespace SkalProj_Datastrukturer_Minne
                             Console.WriteLine($"The queue is {theQueue.Count} persons long\n");
                         }
                         else
-                            Console.WriteLine("The queue is already empty! Please add someone to the queue first.");
+                            Console.WriteLine("The queue is already empty! Please add someone to the queue first.\n");
                         break;
                     case 0:
                         break;
                     default:
-                        Console.WriteLine("Please enter a valid choice from the menu!");
+                        Console.WriteLine("Please enter a valid choice from the menu!\n");
                         break;
                 }
 
@@ -248,6 +267,8 @@ namespace SkalProj_Datastrukturer_Minne
                             Console.WriteLine("The queue is already empty, please add someone to the queue first!\n");
                         break;
                     case 3:
+                        //Takes all the letters in a string and puts it on the stack one by one. Then takes it from the stack one
+                        //by one and puts it back in a new string in the reverse order.
                         string stringToReverse;
                         Stack<Char> reversString = new Stack<Char>();
                         Console.WriteLine("Which string do you what to reverse?");
@@ -284,13 +305,14 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
+
             //Jag skulle använda en queue för att kolla att de kommer i rätt ordning.
 
-            Console.WriteLine("Enter string to check if it is correctly formated");
+            Console.WriteLine("Enter string to check if it's parenthesis is correctly formated");
             string input = GetStringInput();
             bool correct = true;
             Queue<Char> queue = new Queue<Char>();
-            foreach (char item in input)
+            foreach (char item in input) // takes all the parenthesis and puts them into a queue.
             {
                 if(item == '(' || item == ')' || item == '{' || item == '}')
                     queue.Enqueue(item);
@@ -298,7 +320,8 @@ namespace SkalProj_Datastrukturer_Minne
             int stringLength = queue.Count;
             if (stringLength < 2)
                 correct = false;
-            for (int i = 0; i < stringLength && correct; i += 2)
+            for (int i = 0; i < stringLength && correct; i += 2) //Checks that the parenthesis comes in pairs. If it an "end"
+                //parenthesis comes first or wrong end parenthesis comes second the loop will end.
             {
                 char dequeued = queue.Dequeue();
                 switch (dequeued)
@@ -386,6 +409,45 @@ namespace SkalProj_Datastrukturer_Minne
                 return 0;
             }
             return (RecursiveEven(n - 1) + 2);
+        }
+        private static int FibonacciSequenceRecursion(int n)
+        {
+            if (n < 1)
+            {
+                Console.WriteLine("You need to enter a value bigger then 0");
+                return 0;
+            }
+            if(n == 1 || n == 2)
+                return 1;
+            return FibonacciSequenceRecursion(n - 1) + FibonacciSequenceRecursion(n - 2);
+        }
+        private static int IterationEven(int n)
+        {
+            if(n == 0 || n == 1)
+                return 0;
+            int result = 0;
+            for (int i = 2; i <= n; i++)
+            {
+                result += 2;
+            }
+            return result;
+        }
+        private static int FibonacciSequenceIteration(int n)
+        {
+            if (n == 0)
+            {
+                Console.WriteLine("You need to enter a number greater than 0");
+                return 0;
+            }
+            int f1 = 1;
+            int f2 = 1;
+            for (int i = 3; i <= n; i++)
+            {
+                int fx = f1;
+                f1 += f2;
+                f2 = fx;
+            }
+            return f1;
         }
     }
 }
